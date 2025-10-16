@@ -80,89 +80,99 @@ class _SemesterSubjectsPageState extends State<SemesterSubjectsPage> {
       appBar: AppBar(
         title: Text('${widget.year.name}, ${widget.semester.name}'),
       ),
-      body: currentSemester.subjects.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.note_add_outlined,
-                    size: 100,
-                    color: AppTheme.lightBlue.withOpacity(0.5),
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'No subjects added yet',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Tap the + button to add your first subject',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[500],
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [AppTheme.primaryBlue, AppTheme.secondaryBlue],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/images/30848f96b8d6b9377f60438749a622c8.jpg', 
+            fit: BoxFit.cover,
+          ),
+          currentSemester.subjects.isEmpty
+              ? Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Semester GPA',
+                      Icon(
+                        Icons.note_add_outlined,
+                        size: 100,
+                        color: AppTheme.lightBlue.withOpacity(0.5),
+                      ),
+                      const SizedBox(height: 24),
+                      Text(
+                        'No subjects added yet',
                         style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 16,
+                          fontSize: 18,
+                          color: Colors.grey[600],
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        gpa.toStringAsFixed(2),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 48,
-                          fontWeight: FontWeight.bold,
+                        'Tap the + button to add your first subject',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[500],
                         ),
                       ),
                     ],
                   ),
+                )
+              : Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [AppTheme.primaryBlue, AppTheme.secondaryBlue],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          const Text(
+                            'Semester GPA',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            gpa.toStringAsFixed(2),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 48,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: currentSemester.subjects.length,
+                        itemBuilder: (context, index) {
+                          Subject subject = currentSemester.subjects[index];
+                          return _SubjectCard(
+                            subject: subject,
+                            onEdit: () => _editSubject(subject),
+                            onDelete: () => _deleteSubject(subject.id),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: currentSemester.subjects.length,
-                    itemBuilder: (context, index) {
-                      Subject subject = currentSemester.subjects[index];
-                      return _SubjectCard(
-                        subject: subject,
-                        onEdit: () => _editSubject(subject),
-                        onDelete: () => _deleteSubject(subject.id),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _addSubject,
         icon: const Icon(Icons.add),
         label: const Text('Add Subject'),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
@@ -298,11 +308,13 @@ class _AddSubjectDialogState extends State<_AddSubjectDialog> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.subject == null ? 'Add Subject' : 'Edit Subject',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                Center(
+                  child: Text(
+                    widget.subject == null ? 'Add Subject' : 'Edit Subject',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24),

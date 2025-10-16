@@ -68,93 +68,105 @@ class _GPABreakdownPageState extends State<GPABreakdownPage> {
 
     return Scaffold(
       
-      body: years.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.analytics_outlined,
-                    size: 100,
-                    color: AppTheme.lightBlue.withOpacity(0.5),
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'No data available',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Add years and subjects to see your GPA breakdown',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[500],
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  // Overall GPA Card
-                  Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.all(16),
-                    padding: const EdgeInsets.all(32),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [AppTheme.primaryBlue, AppTheme.secondaryBlue],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // 🖼️ Background image
+          Image.asset(
+            'assets/images/30848f96b8d6b9377f60438749a622c8.jpg', // <-- add your image path
+            fit: BoxFit.cover,
+          ),
+
+          // Foreground content
+          years.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.analytics_outlined,
+                        size: 100,
+                        color: AppTheme.lightBlue.withOpacity(0.5),
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.primaryBlue.withOpacity(0.3),
-                          blurRadius: 20,
-                          offset: const Offset(0, 10),
+                      const SizedBox(height: 24),
+                      Text(
+                        'No data available',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[600],
                         ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        const Text(
-                          'Final Weighted GPA',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 18,
-                            letterSpacing: 1,
-                          ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Add years and subjects to see your GPA breakdown',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[500],
                         ),
-                        const SizedBox(height: 16),
-                        Text(
-                          overallGPA.toStringAsFixed(2),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 64,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      // Overall GPA Card
+                      Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(32),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [AppTheme.primaryBlue, AppTheme.secondaryBlue],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppTheme.primaryBlue.withOpacity(0.3),
+                              blurRadius: 20,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Final Weighted GPA',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 18,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              overallGPA.toStringAsFixed(2),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 64,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
 
-                  // Grade Scale Reference
-                  _buildGradeScaleCard(),
+                      // Grade Scale Reference
+                      _buildGradeScaleCard(),
 
-                  // Years Breakdown
-                  ...years.map((year) => _YearBreakdownCard(
-                        year: year,
-                        onEditWeight: (semester) => _editWeight(year, semester),
-                        onRefresh: _loadData,
-                      )),
-                ],
-              ),
-            ),
+                      // Years Breakdown
+                      ...years.map((year) => _YearBreakdownCard(
+                            year: year,
+                            onEditWeight: (semester) => _editWeight(year, semester),
+                            onRefresh: _loadData,
+                          )),
+                    ],
+                  ),
+                ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           // Calculate GPA button - already calculated in real-time
@@ -168,6 +180,8 @@ class _GPABreakdownPageState extends State<GPABreakdownPage> {
         icon: const Icon(Icons.calculate),
         label: const Text('Calculate GPA'),
       ),
+      
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 

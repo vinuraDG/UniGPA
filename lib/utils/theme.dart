@@ -34,6 +34,7 @@ class AppTheme {
 
       // Card Theme
       cardTheme: CardThemeData(
+        color: Colors.white.withOpacity(0.5),
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -78,6 +79,7 @@ class AppTheme {
         backgroundColor: primaryBlue,
         foregroundColor: Colors.white,
         elevation: 4,
+        extendedPadding: EdgeInsets.all(15)
       ),
 
       // Input Decoration Theme
@@ -100,8 +102,8 @@ class AppTheme {
 
       // Bottom Navigation Bar Theme
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: Colors.white,
-        selectedItemColor: primaryBlue,
+        backgroundColor: primaryBlue,
+        selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
         elevation: 8,
         type: BottomNavigationBarType.fixed,

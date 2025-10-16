@@ -147,11 +147,22 @@ class _YearsSemestersPageState extends State<YearsSemestersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         title: const Text('UniGPA',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
         centerTitle: true,
       ),
-      body: _selectedIndex == 0 ? _buildYearsPage() : const GPABreakdownPage(),
+      body:
+       Stack(
+      fit: StackFit.expand,
+      children: [
+      
+        Image.asset(
+          'assets/images/30848f96b8d6b9377f60438749a622c8.jpg', 
+          fit: BoxFit.cover,
+        ),
+       _selectedIndex == 0 ? _buildYearsPage() : const GPABreakdownPage(),
+      ]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) {
@@ -161,6 +172,7 @@ class _YearsSemestersPageState extends State<YearsSemestersPage> {
         },
         items: const [
           BottomNavigationBarItem(
+            
             icon: Icon(Icons.school),
             label: 'Years & Semesters',
           ),
@@ -168,6 +180,7 @@ class _YearsSemestersPageState extends State<YearsSemestersPage> {
             icon: Icon(Icons.analytics),
             label: 'GPA Breakdown',
           ),
+          
         ],
       ),
       floatingActionButton: _selectedIndex == 0
@@ -177,6 +190,7 @@ class _YearsSemestersPageState extends State<YearsSemestersPage> {
               label: const Text('Add Year'),
             )
           : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
