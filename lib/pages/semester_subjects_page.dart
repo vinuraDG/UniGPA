@@ -304,7 +304,7 @@ class _SubjectCard extends StatelessWidget {
       case 'D+':
         return Colors.deepOrange;
       case 'D':
-      case 'F':
+      case 'E':
         return Colors.red;
       default:
         return Colors.grey;
@@ -472,7 +472,7 @@ class _AddSubjectDialogState extends State<_AddSubjectDialog> {
     'A+', 'A', 'A-',
     'B+', 'B', 'B-',
     'C+', 'C', 'C-',
-    'D+', 'D', 'F'
+    'D+', 'D', 'E'
   ];
 
   @override
@@ -534,23 +534,7 @@ class _AddSubjectDialogState extends State<_AddSubjectDialog> {
                   },
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
-                  controller: codeController,
-                  decoration: InputDecoration(
-                    labelText: 'Subject Code',
-                    hintText: 'e.g., CS101',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    prefixIcon: const Icon(Icons.code),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter subject code';
-                    }
-                    return null;
-                  },
-                ),
+                
                 const SizedBox(height: 16),
                 DropdownButtonFormField<int>(
                   value: credits,

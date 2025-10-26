@@ -279,7 +279,7 @@ class _GPABreakdownPageState extends State<GPABreakdownPage> {
       'C-': '1.7',
       'D+': '1.3',
       'D': '1.0',
-      'F': '0.0',
+      'E': '0.0',
     };
 
     return Card(
